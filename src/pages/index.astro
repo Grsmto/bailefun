@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AnimatedTextScene from "../components/AnimatedTextScene";
+---
+
+<Layout title="BAILE FUN">
+  <main>
+    <div class="animation-container">
+      <!-- <AnimatedTextScene client:load /> -->
+    </div>
+  </main>
+</Layout>
+
+<style>
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+
+  main {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    background-image: url(/bailefun.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: white;
+  }
+</style>
