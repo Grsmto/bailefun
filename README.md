@@ -1,54 +1,61 @@
-# Astro Starter Kit: Basics
+# Medusa B2C Starter
 
-```sh
-npm create astro@latest -- --template basics
+This monorepo serves as a starter template/example for building B2C e-commerce applications using [Medusa](https://medusajs.com/) for e-commerce functionality, [Next.js](nextjs.org/) for the frontend, and [Sanity](https://sanity.io/) for content management.
+
+## Project Setup
+
+To get started with this project, follow these steps:
+
+1. Clone the repository:
+
+```
+git clone --depth 1 https://github.com/tinloof/medusa-b2c-starter
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+2. Install dependencies:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This project utilizes pnpm for package management and monorepo functionality. To install dependencies using pnpm, execute the following command:
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```
+pnpm install
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Sanity Setup
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+To set up Sanity for your project:
 
-Any static assets, like images, can be placed in the `public/` directory.
+1. `cd` into the `frontend` directory:
 
-## 🧞 Commands
+```
+cd frontend
+```
 
-All commands are run from the root of the project, from a terminal:
+2. Run the `sanity init` command:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```
+pnpx sanity init --env
+```
 
-## 👀 Want to learn more?
+3. Make sure to append `NEXT_PUBLIC_` where it makes sense in your `.env` file, you can refer to the `.env.example` file in the `frontend` directory.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+4. Set the `NEXT_PUBLIC_SANITY_API_VERSION` in `.env` to today's date in the format `YYYY-MM-DD`.
+
+5. Get the `SANITY_API_TOKEN` by navigating to the [Sanity Manage Dashboard](https://www.sanity.io/manage). Choose your project, access the API section, and generate a token with editor permissions.
+
+## Medusa Setup
+
+To set up Medusa for your project:
+
+Once project is deployed
+
+1. Create a Publishable api key in the dashboard settings and set it to `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`
+
+2. Add the URL of the Medusa project to `NEXT_PUBLIC_MEDUSA_BACKEND_URL`
+
+## Running the Project
+
+After you go through the setup steps, you can run the project using the following command from the root directory:
+
+```
+pnpm dev
+```
