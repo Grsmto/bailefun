@@ -10,7 +10,7 @@ const OnboardingCta = ({ orderId }: { orderId: string }) => {
         <Text className="text-ui-fg-base text-xl">
           Your test order was successfully created! 🎉
         </Text>
-        <Text className="text-ui-fg-subtle text-small-regular">
+        <Text className="text-sm text-small-regular">
           You can now complete setting up your store in the admin.
         </Text>
         <Button

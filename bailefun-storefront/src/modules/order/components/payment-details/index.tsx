@@ -25,7 +25,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
                 Payment method
               </Text>
               <Text
-                className="txt-medium text-ui-fg-subtle"
+                className="txt-medium text-sm"
                 data-testid="payment-method"
               >
                 {paymentInfoMap[payment.provider_id].title}
@@ -35,7 +35,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
                 Payment details
               </Text>
-              <div className="flex gap-2 txt-medium text-ui-fg-subtle items-center">
+              <div className="flex gap-2 txt-medium text-sm items-center">
                 <Container className="flex items-center h-7 w-fit p-2 bg-ui-button-neutral-hover">
                   {paymentInfoMap[payment.provider_id].icon}
                 </Container>

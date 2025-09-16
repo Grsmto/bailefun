@@ -18,7 +18,7 @@ export default async function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="txt-compact-xlarge-plus text-sm hover:text-ui-fg-base uppercase"
             >
               Medusa Store
             </LocalizedClientLink>
@@ -47,7 +47,7 @@ export default async function Footer() {
 
                     return (
                       <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
+                        className="flex flex-col gap-2 text-sm txt-small"
                         key={c.id}
                       >
                         <LocalizedClientLink
@@ -89,7 +89,7 @@ export default async function Footer() {
                 </span>
                 <ul
                   className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
+                    "grid grid-cols-1 gap-2 text-sm txt-small",
                     {
                       "grid-cols-2": (collections?.length || 0) > 3,
                     }
@@ -110,7 +110,7 @@ export default async function Footer() {
             )}
             <div className="flex flex-col gap-y-2">
               <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
+              <ul className="grid grid-cols-1 gap-y-2 text-sm txt-small">
                 <li>
                   <a
                     href="https://github.com/medusajs"

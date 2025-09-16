@@ -42,7 +42,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   >
                     {getProfileCompletion(customer)}%
                   </span>
-                  <span className="uppercase text-base-regular text-ui-fg-subtle">
+                  <span className="uppercase text-base-regular text-sm">
                     Completed
                   </span>
                 </div>
@@ -58,7 +58,7 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                   >
                     {customer?.addresses?.length || 0}
                   </span>
-                  <span className="uppercase text-base-regular text-ui-fg-subtle">
+                  <span className="uppercase text-base-regular text-sm">
                     Saved
                   </span>
                 </div>
