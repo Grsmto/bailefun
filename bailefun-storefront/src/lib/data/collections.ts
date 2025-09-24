@@ -39,7 +39,11 @@ export const listCollections = async (
         cache: "force-cache",
       }
     )
-    .then(({ collections }) => ({ collections, count: collections.length }))
+    .then((something) => {
+      const { collections } = something
+      console.log(something)
+      return { collections, count: collections.length }
+    })
 }
 
 export const getCollectionByHandle = async (

@@ -29,7 +29,7 @@ export default function CheckoutLayout({
             className="txt-compact-xlarge-plus text-sm hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
-            Medusa Store
+            BAILEFUN
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>
