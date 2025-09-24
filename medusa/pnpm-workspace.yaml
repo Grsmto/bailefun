@@ -1,0 +1,7 @@
+ignoredBuiltDependencies:
+  - '@medusajs/telemetry'
+
+onlyBuiltDependencies:
+  - '@swc/core'
+  - esbuild
+  - msgpackr-extract
