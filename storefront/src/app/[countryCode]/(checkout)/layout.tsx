@@ -26,7 +26,7 @@ export default function CheckoutLayout({
           </LocalizedClientLink>
           <LocalizedClientLink
             href="/"
-            className="txt-compact-xlarge-plus text-sm hover:text-ui-fg-base uppercase"
+            className="text-sm hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
             BAILEFUN

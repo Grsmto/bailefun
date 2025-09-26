@@ -154,7 +154,7 @@ export default function ProductActions({
           data-testid="add-product-button"
         >
           {!selectedVariant
-            ? "Select variant"
+            ? "Add to cart"
             : !inStock || !isValidVariant
             ? "Out of stock"
             : "Add to cart"}

@@ -18,12 +18,12 @@ export default async function Footer() {
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-sm hover:text-ui-fg-base uppercase"
+              className="text-sm hover:text-ui-fg-base uppercase"
             >
               BAILEFUN
             </LocalizedClientLink>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
+          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2">
             {productCategories && productCategories?.length > 0 && (
               <div className="flex flex-col gap-y-2">
                 <span className="txt-small-plus txt-ui-fg-base">
@@ -135,6 +135,7 @@ export default async function Footer() {
             </div>
           </div>
         </div>
+        <span className="font-conthrax uppercase text-[12.6vw] -ml-[0.8vw]">BAILEFUN</span>
         <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
           <Text className="txt-compact-small">
             © {new Date().getFullYear()} BAILEFUN. All rights reserved.

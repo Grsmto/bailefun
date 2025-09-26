@@ -22,7 +22,7 @@ export default async function Nav() {
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus font-conthrax hover:text-ui-fg-base uppercase"
+              className="font-conthrax uppercase"
               data-testid="nav-store-link"
             >
               BAILEFUN
