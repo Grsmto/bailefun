@@ -13,10 +13,10 @@ type ProductTabsProps = {
 
 const ProductTabs = ({ product }: ProductTabsProps) => {
   const tabs = [
-    {
-      label: "Product Information",
-      component: <ProductInfoTab product={product} />,
-    },
+    // {
+    //   label: "Product Information",
+    //   component: <ProductInfoTab product={product} />,
+    // },
     {
       label: "Shipping & Returns",
       component: <ShippingInfoTab />,
@@ -87,8 +87,7 @@ const ShippingInfoTab = () => {
           <div>
             <span className="font-semibold">Fast delivery</span>
             <p className="max-w-sm">
-              Your package will arrive in 3-5 business days at your pick up
-              location or in the comfort of your home.
+              Your package will arrive in a random number of 4-7 business days because it is me preparing the orders manually. So be patient.
             </p>
           </div>
         </div>
@@ -98,7 +97,7 @@ const ShippingInfoTab = () => {
             <span className="font-semibold">Simple exchanges</span>
             <p className="max-w-sm">
               Is the fit not quite right? No worries - we&apos;ll exchange your
-              product for a new one.
+              product for a new one. But hey, I'm sure you'll choose your size wisely please.
             </p>
           </div>
         </div>

@@ -19,9 +19,9 @@ type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
 
 type AccordionProps =
   | (AccordionPrimitive.AccordionSingleProps &
-      React.RefAttributes<HTMLDivElement>)
+    React.RefAttributes<HTMLDivElement>)
   | (AccordionPrimitive.AccordionMultipleProps &
-      React.RefAttributes<HTMLDivElement>)
+    React.RefAttributes<HTMLDivElement>)
 
 const Accordion: React.FC<AccordionProps> & {
   Item: React.FC<AccordionItemProps>
@@ -54,14 +54,14 @@ const Item: React.FC<AccordionItemProps> = ({
     >
       <AccordionPrimitive.Header className="px-1">
         <div className="flex flex-col">
-          <div className="flex w-full items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Text className="text-sm text-sm">{title}</Text>
-            </div>
-            <AccordionPrimitive.Trigger>
+          <AccordionPrimitive.Trigger>
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Text className="text-sm text-sm">{title}</Text>
+              </div>
               {customTrigger || <MorphingTrigger />}
-            </AccordionPrimitive.Trigger>
-          </div>
+            </div>
+          </AccordionPrimitive.Trigger>
           {subtitle && (
             <Text as="span" size="small" className="mt-1">
               {subtitle}

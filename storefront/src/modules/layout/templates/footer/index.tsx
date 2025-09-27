@@ -20,7 +20,7 @@ export default async function Footer() {
               href="/"
               className="text-sm hover:text-ui-fg-base uppercase"
             >
-              BAILEFUN
+              <img height="36" width="36" src="/bailefun.svg" />
             </LocalizedClientLink>
           </div>
           <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2">

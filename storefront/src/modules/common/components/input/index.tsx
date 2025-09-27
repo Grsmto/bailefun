@@ -33,7 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="flex flex-col w-full">
-        <div className="flex relative z-0 w-full txt-compact-medium">
+        <div className="flex relative z-0 w-full">
           <input
             type={inputType}
             name={name}

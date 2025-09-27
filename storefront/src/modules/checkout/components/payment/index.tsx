@@ -107,12 +107,12 @@ const Payment = ({
   }, [isOpen])
 
   return (
-    <div className="bg-white">
+    <div>
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
+            "flex flex-row gap-x-2 items-baseline",
             {
               "opacity-50 pointer-events-none select-none":
                 !isOpen && !paymentReady,
@@ -172,7 +172,7 @@ const Payment = ({
                 Payment method
               </Text>
               <Text
-                className="txt-medium text-sm"
+                className="text-sm"
                 data-testid="payment-method-summary"
               >
                 Gift card
@@ -210,7 +210,7 @@ const Payment = ({
                   Payment method
                 </Text>
                 <Text
-                  className="txt-medium text-sm"
+                  className="text-sm"
                   data-testid="payment-method-summary"
                 >
                   {paymentInfoMap[activeSession?.provider_id]?.title ||
@@ -222,7 +222,7 @@ const Payment = ({
                   Payment details
                 </Text>
                 <div
-                  className="flex gap-2 txt-medium text-sm items-center"
+                  className="flex gap-2 text-sm items-center"
                   data-testid="payment-details-summary"
                 >
                   <Container className="flex items-center h-7 w-fit p-2 bg-ui-button-neutral-hover">
@@ -244,7 +244,7 @@ const Payment = ({
                 Payment method
               </Text>
               <Text
-                className="txt-medium text-sm"
+                className="text-sm"
                 data-testid="payment-method-summary"
               >
                 Gift card

@@ -119,7 +119,7 @@ export default function ProductActions({
         <div>
           {(product.variants?.length ?? 0) > 1 && (
             <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => {
+              {(product.options || []).sort((a, b) => a.created_at!.localeCompare(b.created_at!)).map((option) => {
                 return (
                   <div key={option.id}>
                     <OptionSelect
@@ -156,8 +156,8 @@ export default function ProductActions({
           {!selectedVariant
             ? "Add to cart"
             : !inStock || !isValidVariant
-            ? "Out of stock"
-            : "Add to cart"}
+              ? "Out of stock"
+              : "Add to cart"}
         </Button>
         <MobileActions
           product={product}
