@@ -26,7 +26,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "s3.eu-west-2.amazonaws.com/bailefun.fun",
+        hostname: "medusa-bailefun-fun.s3.eu-west-2.amazonaws.com",
       }
     ],
   },
