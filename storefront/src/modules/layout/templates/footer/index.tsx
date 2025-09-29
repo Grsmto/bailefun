@@ -23,8 +23,8 @@ export default async function Footer() {
               <img height="36" width="36" src="/bailefun.svg" />
             </LocalizedClientLink>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2">
-            {productCategories && productCategories?.length > 0 && (
+          <div className="text-small-regular gap-10 md:gap-x-16 grid">
+            {/* {productCategories && productCategories?.length > 0 && (
               <div className="flex flex-col gap-y-2">
                 <span className="txt-small-plus txt-ui-fg-base">
                   Products
@@ -81,7 +81,7 @@ export default async function Footer() {
                   })}
                 </ul>
               </div>
-            )}
+            )} */}
             {/* {collections && collections.length > 0 && (
               <div className="flex flex-col gap-y-2">
                 <span className="txt-small-plus txt-ui-fg-base">
