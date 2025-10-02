@@ -23,11 +23,11 @@
     "test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^3.0.1",
     "@medusajs/admin-sdk": "2.10.3",
     "@medusajs/cli": "2.10.3",
-    "@medusajs/dashboard": "^2.10.3",
-    "@medusajs/draft-order": "^2.10.3",
     "@medusajs/framework": "2.10.3",
+    "@medusajs/js-sdk": "2.10.3",
     "@medusajs/icons": "^2.10.3",
     "@medusajs/medusa": "2.10.3",
     "@medusajs/types": "^2.10.3",
@@ -37,7 +37,6 @@
     "@mikro-orm/migrations": "6.4.3",
     "@mikro-orm/postgresql": "6.4.3",
     "awilix": "^8.0.1",
-    "medusa-plugin-brevo-email": "^1.0.22",
     "pg": "^8.13.0"
   },
   "devDependencies": {
@@ -60,6 +59,5 @@
   },
   "engines": {
     "node": ">=20"
-  },
-  "packageManager": "pnpm@10.15.1"
+  }
 }
