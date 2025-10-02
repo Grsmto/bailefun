@@ -42,6 +42,13 @@ const Login = ({ setCurrentView }: Props) => {
           />
         </div>
         <ErrorMessage error={message} data-testid="login-error-message" />
+        {message && <button
+          onClick={() => setCurrentView(LOGIN_VIEW.RESET_PASSWORD)}
+          className="underline"
+          data-testid="register-button"
+        >
+          Forgot your password?
+        </button>}
         <SubmitButton data-testid="sign-in-button" className="w-full mt-6">
           Sign in
         </SubmitButton>
