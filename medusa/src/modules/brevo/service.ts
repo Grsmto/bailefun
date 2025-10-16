@@ -5,6 +5,9 @@ import {
 } from "@medusajs/framework/utils"
 import * as Brevo from "@getbrevo/brevo"
 import { ProviderSendNotificationDTO, ProviderSendNotificationResultsDTO } from "@medusajs/types"
+import { render } from '@react-email/components';
+
+import OrderPlacedEmail, { subject as orderPlacedSubject } from "../../../emails/orderPlaced"
 
 type InjectedDependencies = {
     logger: Logger
@@ -33,35 +36,28 @@ export type PluginOptions = {
 }
 
 export enum Templates {
-    order_placed = 'order-placed',
-    order_canceled = 'order-canceled',
-    customer_created = 'customer-created',
-    password_reset = 'password-reset',
-    gift_card_created = 'gift-card-created',
-    order_shipped = 'order-shipped',
-    user_created = 'user-created',
+    ORDER_PLACED = 'order-placed',
+    ORDER_CANCELED = 'order-canceled',
+    CUSTOMER_CREATED = 'customer-created',
+    PASSWORD_RESET = 'password-reset',
+    GIFT_CARD_CREATED = 'gift-card-created',
+    ORDER_SHIPPED = 'order-shipped',
+    USER_CREATED = 'user-created',
 }
 
-const templates = {
-    [Templates.order_placed]: 2,
-    [Templates.order_canceled]: 2,
-    [Templates.customer_created]: 4,
-    [Templates.password_reset]: 3,
-    [Templates.gift_card_created]: 5,
-    [Templates.order_shipped]: 6,
-    [Templates.user_created]: 7,
+const templates: { [key in Templates]?: (props: unknown) => React.ReactNode } = {
+    [Templates.ORDER_PLACED]: OrderPlacedEmail,
+}
+
+const subjects: { [key in Templates]?: string } = {
+    [Templates.ORDER_PLACED]: orderPlacedSubject,
 }
 
 export default class BrevoNotificationProviderService extends AbstractNotificationProviderService {
     static identifier = "brevo"
 
     protected readonly options_: PluginOptions
-    protected readonly logger_: Logger
-    // protected readonly orderService_: any
-    // protected readonly cartService_: any
-    // protected readonly totalsService_: any
-    // protected readonly giftCardService_: any
-    // protected readonly fulfillmentService_: any
+    protected readonly logger: Logger
 
     protected client_: Brevo.TransactionalEmailsApi
     protected contactsClient_: Brevo.ContactsApi
@@ -70,12 +66,7 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
         super()
 
         this.options_ = options
-        this.logger_ = container.logger
-        // this.orderService_ = container.orderService
-        // this.cartService_ = container.cartService
-        // this.totalsService_ = container.totalsService
-        // this.giftCardService_ = container.giftCardService
-        // this.fulfillmentService_ = container.fulfillmentService
+        this.logger = container.logger
 
         // Initialize Brevo clients
         this.client_ = new Brevo.TransactionalEmailsApi()
@@ -108,7 +99,7 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
     //         })
 
     //         if (!this.options_.order_placed_template) {
-    //             this.logger_.warn("No order placed template configured")
+    //             this.logger.warn("No order placed template configured")
     //             return
     //         }
 
@@ -122,7 +113,7 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
     //             this.getLocale(order)
     //         )
     //     } catch (error) {
-    //         this.logger_.error(`Error in handleOrderPlaced: ${error.message}`, error)
+    //         this.logger.error(`Error in handleOrderPlaced: ${error.message}`, error)
     //         throw error
     //     }
     // }
@@ -136,10 +127,50 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
         return this.options_.localization[region] || this.options_.localization.default || "en"
     }
 
+    getTemplate(template: Templates) {
+        const allowedTemplates = Object.keys(templates)
+
+        if (!allowedTemplates.includes(template)) {
+            return null
+        }
+
+        return templates[template]
+    }
+
+    getSubject(template: Templates) {
+        const allowedSubjects = Object.keys(subjects)
+
+        if (!allowedSubjects.includes(template)) {
+            return null
+        }
+
+        return subjects[template]
+    }
+
+
     async send(
         notification: ProviderSendNotificationDTO
     ): Promise<ProviderSendNotificationResultsDTO> {
         console.log('Send!')
+
+        const template = this.getTemplate(notification.template as Templates)
+
+        if (!template) {
+            this.logger.error(`Couldn't find an email template for ${notification.template}. The valid options are ${Object.values(Templates)}`)
+            return {}
+        }
+
+        const templateSubject = this.getSubject(notification.template as Templates)
+
+        if (!templateSubject) {
+            this.logger.error(`Couldn't find an email subject for ${notification.template}. The valid options are ${Object.values(Templates)}`)
+            return {}
+        }
+
+        const templateHtml = await render(template(notification.data))
+
+        console.log(templateHtml)
+        console.log(notification.data)
 
         try {
             const sendSmtpEmail = new Brevo.SendSmtpEmail()
@@ -147,7 +178,8 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
                 email: this.options_.from_email,
                 name: this.options_.from_name,
             }
-            sendSmtpEmail.templateId = templates[notification.template]
+            sendSmtpEmail.htmlContent = templateHtml
+            sendSmtpEmail.subject = templateSubject
             sendSmtpEmail.to = [{ email: notification.to }]
 
             if (notification.data) {
@@ -158,7 +190,7 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
 
             return {}
         } catch (error) {
-            this.logger_.error(`Error sending email with template ${templates[notification.template]}: ${error.message}`, error)
+            this.logger.error(`Error sending email with template ${notification.template}: ${error.message.response.data}`, error)
             throw error
         }
     }
