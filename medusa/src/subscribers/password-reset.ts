@@ -35,7 +35,7 @@ export default async function resetPasswordTokenHandler({
         to: email,
         channel: "email",
         // TODO replace with template ID in notification provider
-        template: Templates.password_reset,
+        template: Templates.PASSWORD_RESET,
         data: {
             // a URL to a frontend application
             reset_url: `${urlPrefix}/reset-password?token=${token}&email=${email}`,
