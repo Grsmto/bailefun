@@ -1,24 +1,32 @@
-import { Suspense } from "react"
+"use client"
 
-import { listRegions } from "@lib/data/regions"
-import { StoreRegion } from "@medusajs/types"
+import { clx } from "@medusajs/ui"
+import { StoreCart, StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import CartButton from "@modules/layout/components/cart-button"
-import SideMenu from "@modules/layout/components/side-menu"
+import CartDropdown from "@modules/layout/components/cart-dropdown"
+import CountrySelect from "@modules/layout/components/country-select"
+import { useState, useEffect } from "react"
 
-export default async function Nav() {
-  const regions = await listRegions().then((regions: StoreRegion[]) => regions)
+
+export default function Nav({ regions, cart }: { regions: StoreRegion[], cart: StoreCart | null }) {
+
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY || document.documentElement.scrollTop
+      const viewportHeight = window.innerHeight
+      setIsScrolled(scrollPosition > viewportHeight * 0.6)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
+    <div className={clx("sticky top-0 inset-x-0 z-50 group", isScrolled ? '' : 'mix-blend-hue')}>
+      <header className="absolute w-full h-16 mx-auto duration-200 z-50">
         <nav className="content-container txt-xsmall-plus text-sm flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} />
-            </div>
-          </div>
-
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
@@ -29,8 +37,14 @@ export default async function Nav() {
             </LocalizedClientLink>
           </div>
 
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
+          {/* <div className="flex-1 basis-0 h-full flex items-center">
+            <div className="h-full">
+              <SideMenu regions={regions} />
+            </div>
+          </div> */}
+
+          <div className="flex items-center xsmall:gap-x-2 h-full flex-1 basis-0 justify-end -mr-3">
+            {/* <div className="hidden small:flex items-center gap-x-6 h-full">
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
                 href="/account"
@@ -38,20 +52,13 @@ export default async function Nav() {
               >
                 Account
               </LocalizedClientLink>
-            </div>
-            <Suspense
-              fallback={
-                <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
-                  href="/cart"
-                  data-testid="nav-cart-link"
-                >
-                  Cart (0)
-                </LocalizedClientLink>
-              }
-            >
-              <CartButton />
-            </Suspense>
+            </div> */}
+            {regions && (
+              <CountrySelect
+                regions={regions}
+              />
+            )}
+            <CartDropdown cart={cart} />
           </div>
         </nav>
       </header>
