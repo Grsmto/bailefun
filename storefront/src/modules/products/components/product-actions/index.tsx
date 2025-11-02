@@ -150,7 +150,6 @@ export default function ProductActions({
             !isValidVariant
           }
           className="w-full h-10"
-          // isLoading={isAdding}
           data-testid="add-product-button"
         >
           {!selectedVariant
@@ -169,6 +168,7 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          isValidVariant={isValidVariant}
         />
       </div>
     </>

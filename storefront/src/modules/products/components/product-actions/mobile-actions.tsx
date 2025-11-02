@@ -1,5 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react"
-import { Button, clx } from "@medusajs/ui"
+import { clx } from "@medusajs/ui"
+import { Button } from "@/components/ui/button"
 import React, { Fragment, useMemo } from "react"
 
 import useToggleState from "@lib/hooks/use-toggle-state"
@@ -21,6 +22,7 @@ type MobileActionsProps = {
   isAdding?: boolean
   show: boolean
   optionsDisabled: boolean
+  isValidVariant?: boolean
 }
 
 const MobileActions: React.FC<MobileActionsProps> = ({
@@ -33,6 +35,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   isAdding,
   show,
   optionsDisabled,
+  isValidVariant
 }) => {
   const { state, open, close } = useToggleState()
 
@@ -111,23 +114,27 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   <span>
                     {variant
                       ? Object.values(options).join(" / ")
-                      : "Select Options"}
+                      : "Select size"}
                   </span>
                   <ChevronDown />
                 </div>
               </Button>}
               <Button
                 onClick={handleAddToCart}
-                disabled={!inStock || !variant}
+                disabled={
+                  !inStock ||
+                  !variant ||
+                  optionsDisabled ||
+                  !isValidVariant
+                }
                 className="w-full"
-                isLoading={isAdding}
                 data-testid="mobile-cart-button"
               >
                 {!variant
-                  ? "Select variant"
-                  : !inStock
-                  ? "Out of stock"
-                  : "Add to cart"}
+                  ? "Add to cart"
+                  : !inStock || !isValidVariant
+                    ? "Out of stock"
+                    : "Add to cart"}
               </Button>
             </div>
           </div>
