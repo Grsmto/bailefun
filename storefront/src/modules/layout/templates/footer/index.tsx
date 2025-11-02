@@ -1,6 +1,6 @@
 import { listCategories } from "@lib/data/categories"
 import { listCollections } from "@lib/data/collections"
-import { Text, clx } from "@medusajs/ui"
+import { Text } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
@@ -12,9 +12,9 @@ export default async function Footer() {
   const productCategories = await listCategories()
 
   return (
-    <footer className="border-t border-ui-border-base w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+    <footer className="content-container mb-6 xsmall:mb-24">
+      <div className="content-container px-8 xsmall:px-22 flex flex-col w-full bg-accent rounded-4xl">
+        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-12 xsmall:py-22">
           <div>
             <LocalizedClientLink
               href="/"
@@ -109,38 +109,26 @@ export default async function Footer() {
               </div>
             )} */}
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">BAILEFUN</span>
+              <span className="text-small-semi">BAILEFUN</span>
               <ul className="grid grid-cols-1 gap-y-2 text-sm txt-small">
                 <li>
                   <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="mailto:contact@bailefun.com"
                     className="hover:text-ui-fg-base"
                   >
                     Contact
                   </a>
                 </li>
+                <MedusaCTA />
               </ul>
             </div>
           </div>
         </div>
-        <span className="font-conthrax uppercase text-[12.6vw] -ml-[0.8vw]">BAILEFUN</span>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
+        <span className="font-conthrax uppercase text-[clamp(1.5rem,12.6vw,12rem)] -ml-[calc((var(--spacing)*8)+4vw)] xsmall:-ml-[calc((var(--spacing)*22)+2vw)] -mb-1 small:-mb-4 leading-[1]">BAILEFUN</span>
+        <div className="flex w-full mb-10 justify-between">
+          <Text className="text-small-regular xsmall:text-sm">
             © {new Date().getFullYear()} BAILEFUN. All rights reserved.
           </Text>
-          <MedusaCTA />
         </div>
       </div>
     </footer>
