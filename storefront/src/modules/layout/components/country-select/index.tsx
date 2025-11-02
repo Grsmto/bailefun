@@ -1,32 +1,32 @@
 "use client"
 
 import {
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-  Transition,
-} from "@headlessui/react"
-import { Fragment, useEffect, useMemo, useState } from "react"
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import { Button } from "@/components/ui/button"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { useEffect, useMemo, useState } from "react"
 import ReactCountryFlag from "react-country-flag"
+import { useToggleState } from "@medusajs/ui"
+import { ChevronsUpDownIcon } from "lucide-react"
 
-import { StateType } from "@lib/hooks/use-toggle-state"
 import { useParams, usePathname } from "next/navigation"
 import { updateRegion } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
 
-type CountryOption = {
-  country: string
-  region: string
-  label: string
-}
-
 type CountrySelectProps = {
-  toggleState: StateType
   regions: HttpTypes.StoreRegion[]
 }
 
-const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
+const CountrySelect = ({ regions }: CountrySelectProps) => {
+  const toggleState = useToggleState()
   const [current, setCurrent] = useState<
     | { country: string | undefined; region: string; label: string | undefined }
     | undefined
@@ -34,8 +34,7 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
 
   const { countryCode } = useParams()
   const currentPath = usePathname().split(`/${countryCode}`)[1]
-
-  const { state, close } = toggleState
+  const { state, close, open, toggle } = toggleState
 
   const options = useMemo(() => {
     return regions
@@ -57,77 +56,79 @@ const CountrySelect = ({ toggleState, regions }: CountrySelectProps) => {
     }
   }, [options, countryCode])
 
-  const handleChange = (option: CountryOption) => {
-    updateRegion(option.country, currentPath)
+  const handleChange = (country: string) => {
+    updateRegion(country, currentPath)
     close()
+  }
+
+  if (!regions || !current) {
+    return null
   }
 
   return (
     <div>
-      <Listbox
-        as="span"
-        onChange={handleChange}
-        defaultValue={
-          countryCode
-            ? options?.find((o) => o?.country === countryCode)
-            : undefined
-        }
-      >
-        <ListboxButton className="py-1 w-full">
-          <div className="txt-compact-small flex items-start gap-x-2">
-            <span>Shipping to:</span>
-            {current && (
-              <span className="txt-compact-small flex items-center gap-x-2">
-                {/* @ts-ignore */}
-                <ReactCountryFlag
-                  svg
-                  style={{
-                    width: "16px",
-                    height: "16px",
-                  }}
-                  countryCode={current.country ?? ""}
-                />
-                {current.label}
-              </span>
-            )}
-          </div>
-        </ListboxButton>
-        <div className="flex relative w-full min-w-[320px]">
-          <Transition
-            show={state}
-            as={Fragment}
-            leave="transition ease-in duration-150"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <ListboxOptions
-              className="absolute -bottom-[calc(100%-36px)] left-0 xsmall:left-auto xsmall:right-0 max-h-[442px] overflow-y-scroll z-900 bg-white drop-shadow-md text-small-regular uppercase text-black no-scrollbar rounded-rounded w-full"
-              static
+      <Popover open={state} onOpenChange={toggle}>
+        <PopoverTrigger
+          render={(props) => (
+            <Button
+              {...props}
+              variant="ghost"
+              size="sm"
+              role="combobox"
+              aria-expanded={open}
             >
-              {options?.map((o, index) => {
-                return (
-                  <ListboxOption
-                    key={index}
-                    value={o}
-                    className="py-2 hover:bg-gray-200 px-3 cursor-pointer flex items-center gap-x-2"
-                  >
-                    {/* @ts-ignore */}
-                    <ReactCountryFlag
-                      svg
-                      style={{
-                        width: "16px",
-                        height: "16px",
+              <div className="txt-compact-small flex items-start gap-x-2">
+                <span className="hidden xsmall:block">Shipping to:</span>
+                <span className="txt-compact-small flex items-center gap-x-2">
+                  {/* @ts-ignore */}
+                  <ReactCountryFlag
+                    svg
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                    }}
+                    countryCode={current.country ?? ""}
+                  />
+                  <span className="hidden xsmall:block">{current.label}</span>
+                </span>
+              </div>
+              <ChevronsUpDownIcon className="size-4 shrink-0 xsmall:opacity-50 -mr-1" />
+            </Button>
+          )}
+        />
+        <PopoverContent className="w-[250px] p-0" sideOffset={4} arrow={false}>
+          <Command>
+            <CommandList>
+              <CommandGroup>
+                {options?.map((o, index) => {
+                  return (
+                    <CommandItem
+                      key={index}
+                      value={o?.country}
+                      onSelect={(currentValue) => {
+                        handleChange(currentValue)
+                        close()
                       }}
-                      countryCode={o?.country ?? ""}
-                    />{" "}
-                    {o?.label}
-                  </ListboxOption>
-                )
-              })}
-            </ListboxOptions>
-          </Transition>
-        </div>
-      </Listbox>
+                      className="py-2 hover:bg-gray-200 px-3 cursor-pointer flex items-center gap-x-2"
+                    >
+                      {/* @ts-ignore */}
+                      <ReactCountryFlag
+                        svg
+                        style={{
+                          width: "16px",
+                          height: "16px",
+                        }}
+                        countryCode={o?.country ?? ""}
+                      />{" "}
+                      {o?.label}
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }
