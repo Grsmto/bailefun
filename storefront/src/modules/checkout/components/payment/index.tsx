@@ -1,14 +1,15 @@
 "use client"
 
-import { RadioGroup } from "@headlessui/react"
 import { isStripe as isStripeFunc, paymentInfoMap } from "@lib/constants"
 import { initiatePaymentSession } from "@lib/data/cart"
 import { CheckCircleSolid, CreditCard } from "@medusajs/icons"
-import { Button, Container, Heading, Text, clx } from "@medusajs/ui"
+import { Container, Heading, Text, clx } from "@medusajs/ui"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import PaymentContainer, {
   StripeCardContainer,
 } from "@modules/checkout/components/payment-container"
+import { Button } from "@/components/ui/button"
+import { RadioGroup } from "@/components/ui/radio-group"
 import Divider from "@modules/common/components/divider"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
@@ -140,7 +141,7 @@ const Payment = ({
             <>
               <RadioGroup
                 value={selectedPaymentMethod}
-                onChange={(value: string) => setPaymentMethod(value)}
+                onValueChange={(value: string) => setPaymentMethod(value)}
               >
                 {availablePaymentMethods.map((paymentMethod) => (
                   <div key={paymentMethod.id}>
@@ -168,7 +169,7 @@ const Payment = ({
 
           {paidByGiftcard && (
             <div className="flex flex-col w-1/3">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
+              <Text className="txt-medium-plus mb-1">
                 Payment method
               </Text>
               <Text
@@ -186,11 +187,11 @@ const Payment = ({
           />
 
           <Button
-            size="large"
+            size="lg"
             className="mt-6"
             onClick={handleSubmit}
-            isLoading={isLoading}
             disabled={
+              isLoading ||
               (isStripe && !cardComplete) ||
               (!selectedPaymentMethod && !paidByGiftcard)
             }
@@ -206,7 +207,7 @@ const Payment = ({
           {cart && paymentReady && activeSession ? (
             <div className="flex items-start gap-x-1 w-full">
               <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
+                <Text className="txt-medium-plus mb-1">
                   Payment method
                 </Text>
                 <Text
@@ -218,7 +219,7 @@ const Payment = ({
                 </Text>
               </div>
               <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
+                <Text className="txt-medium-plus mb-1">
                   Payment details
                 </Text>
                 <div
@@ -240,7 +241,7 @@ const Payment = ({
             </div>
           ) : paidByGiftcard ? (
             <div className="flex flex-col w-1/3">
-              <Text className="txt-medium-plus text-ui-fg-base mb-1">
+              <Text className="txt-medium-plus mb-1">
                 Payment method
               </Text>
               <Text
