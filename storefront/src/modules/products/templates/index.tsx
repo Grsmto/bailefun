@@ -33,7 +33,8 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       >
         <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
           <ProductInfo product={product} />
-          <ProductTabs product={product} />
+
+          <div className="hidden small:flex"><ProductTabs product={product} /></div>
         </div>
         <div className="block w-full relative">
           <ImageGallery images={product?.images || []} />
@@ -51,6 +52,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             <ProductActionsWrapper id={product.id} region={region} />
           </Suspense>
         </div>
+        <div className="small:hidden"><ProductTabs product={product} /></div>
       </div>
       <div
         className="content-container my-16 small:my-32"

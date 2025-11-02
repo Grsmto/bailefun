@@ -200,12 +200,12 @@
     /* Firefox */
   }
 
-  input:focus~label,
-  input:not(:placeholder-shown)~label {
+  input[type="text"]:focus~label,
+  input[type="text"]:not(:placeholder-shown)~label {
     @apply -translate-y-3 text-[10px] opacity-30;
   }
 
-  input:focus~label {
+  input[type="text"]:focus~label {
     @apply left-0;
   }
 
@@ -355,7 +355,7 @@
   --secondary-foreground: oklch(20.5% 0 0);
   --muted: oklch(92.2% 0 0);
   --muted-foreground: oklch(43.9% 0 0);
-  --accent: oklch(92.2% 0 0);
+  --accent: oklch(0.9168 0.1915 101.41);
   --accent-foreground: oklch(14.5% 0 0);
   --destructive: oklch(50.5% 0.213 27.518);
   --destructive-foreground: oklch(98.5% 0 0);

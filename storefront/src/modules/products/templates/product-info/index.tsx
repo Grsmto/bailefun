@@ -12,18 +12,18 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
       <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
         <Heading
           level="h2"
-          className="text-3xl leading-10 text-ui-fg-base uppercase"
+          className="text-3xl leading-10 uppercase"
           data-testid="product-title"
         >
           {product.title}
         </Heading>
 
-        <Text
+        {product.description && <Text
           className="text-medium text-sm whitespace-pre-line"
           data-testid="product-description"
         >
           {product.description}
-        </Text>
+        </Text>}
       </div>
     </div>
   )

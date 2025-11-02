@@ -135,10 +135,9 @@ const StripePaymentButton = ({
   return (
     <>
       <Button
-        disabled={disabled || notReady}
+        disabled={disabled || notReady || submitting}
         onClick={handlePayment}
-        size="large"
-        isLoading={submitting}
+        size="lg"
         data-testid={dataTestId}
       >
         Place order
@@ -174,10 +173,9 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
   return (
     <>
       <Button
-        disabled={notReady}
-        isLoading={submitting}
+        disabled={notReady || submitting}
         onClick={handlePayment}
-        size="large"
+        size="lg"
         data-testid="submit-order-button"
       >
         Place order
