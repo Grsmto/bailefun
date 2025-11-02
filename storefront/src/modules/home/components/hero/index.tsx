@@ -35,8 +35,8 @@ const Hero = () => {
   const ref = useRef(null)
 
   return (
-    <div className="h-[60vh] max-h-[120vw] min-h-[400px] w-full border-b border-ui-border-base relative bg-ui-bg-subtle">
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center gap-6 overflow-hidden">
+    <div className="h-[60vh] max-h-[120vw] min-h-[400px] w-full border-b border-ui-border-base relative bg-ui-bg-subtle pb-14">
+      <div className="flex flex-col justify-center items-center text-center gap-6 h-full overflow-hidden">
         <div
           className="flex flex-col w-full h-full"
         >
@@ -58,6 +58,10 @@ const Hero = () => {
             </Canvas>
           </div>
         </div>
+      </div>
+      <div className="absolute left-0 right-0 bottom-4 content-container txt-xsmall-plus text-sm w-full text-small-regular xsmall:mb-8">
+        <h2 className="text-base xsmall:text-2xl font-bold uppercase">NEW TEES OUT NOW!</h2>
+        <h3>T-shirts designed in London for brasileiros</h3>
       </div>
     </div>
   )

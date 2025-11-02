@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 
 import { listCartOptions, retrieveCart } from "@lib/data/cart"
+import { listRegions } from "@lib/data/regions"
 import { retrieveCustomer } from "@lib/data/customer"
 import { getBaseURL } from "@lib/util/env"
 import { StoreCartShippingOption } from "@medusajs/types"
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const customer = await retrieveCustomer()
   const cart = await retrieveCart()
+  const regions = await listRegions()
   let shippingOptions: StoreCartShippingOption[] = []
 
   if (cart) {
@@ -26,7 +28,7 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Nav />
+      <Nav regions={regions} cart={cart} />
       {customer && cart && (
         <CartMismatchBanner customer={customer} cart={cart} />
       )}

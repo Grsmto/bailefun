@@ -278,6 +278,10 @@
     @apply text-2xl leading-[36px] font-semibold;
   }
 
+  .text-xl-bold {
+    @apply text-2xl leading-[36px] font-bold;
+  }
+
   .text-2xl-regular {
     @apply text-[30px] leading-[48px] font-normal;
   }
