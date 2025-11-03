@@ -32,7 +32,7 @@ type GLTFResult = GLTF & {
 export function Model(props: JSX.IntrinsicElements["group"]) {
   const group = useRef<THREE.Group>();
   const { nodes, materials } = useGLTF(
-    "/bailefun_webgl_2.glb"
+    "/bailefun_webgl.glb"
   ) as GLTFResult;
   return (
     <group {...props} dispose={null}>
