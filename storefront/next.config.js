@@ -12,23 +12,19 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost",
-      },
+      new URL('http://localhost:9000/static/*'),
       {
         protocol: "https",
         hostname: "medusa-bailefun-fun.s3.eu-west-2.amazonaws.com",
       }
     ],
+    qualities: [25, 50, 90],
+    unoptimized: process.env.NODE_ENV === "development",
   },
 }
 
