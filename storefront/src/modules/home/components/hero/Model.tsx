@@ -122,4 +122,4 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/bailefun_webgl_2.glb");
+useGLTF.preload("/bailefun_webgl.glb");
