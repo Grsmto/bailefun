@@ -12,11 +12,6 @@ import OrderPlacedEmail, { subject as orderPlacedSubject } from "../../../emails
 type InjectedDependencies = {
     logger: Logger
     manager: any
-    // orderService: any
-    // cartService: any
-    // totalsService: any
-    // giftCardService: any
-    // fulfillmentService: any
 }
 
 export type PluginOptions = {
@@ -59,8 +54,7 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
     protected readonly options_: PluginOptions
     protected readonly logger: Logger
 
-    protected client_: Brevo.TransactionalEmailsApi
-    protected contactsClient_: Brevo.ContactsApi
+    protected client: Brevo.TransactionalEmailsApi
 
     constructor(container: InjectedDependencies, options: PluginOptions) {
         super()
@@ -69,11 +63,8 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
         this.logger = container.logger
 
         // Initialize Brevo clients
-        this.client_ = new Brevo.TransactionalEmailsApi()
-        this.client_.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, options.api_key)
-
-        this.contactsClient_ = new Brevo.ContactsApi()
-        this.contactsClient_.setApiKey(Brevo.ContactsApiApiKeys.apiKey, options.api_key)
+        this.client = new Brevo.TransactionalEmailsApi()
+        this.client.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, options.api_key)
     }
 
     static validateOptions(options: Record<any, any>) {
@@ -151,8 +142,6 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
     async send(
         notification: ProviderSendNotificationDTO
     ): Promise<ProviderSendNotificationResultsDTO> {
-        console.log('Send!')
-
         const template = this.getTemplate(notification.template as Templates)
 
         if (!template) {
@@ -169,9 +158,6 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
 
         const templateHtml = await render(template(notification.data))
 
-        console.log(templateHtml)
-        console.log(notification.data)
-
         try {
             const sendSmtpEmail = new Brevo.SendSmtpEmail()
             sendSmtpEmail.sender = {
@@ -181,12 +167,13 @@ export default class BrevoNotificationProviderService extends AbstractNotificati
             sendSmtpEmail.htmlContent = templateHtml
             sendSmtpEmail.subject = templateSubject
             sendSmtpEmail.to = [{ email: notification.to }]
+            sendSmtpEmail.bcc = [{ email: this.options_.from_email }]
 
             if (notification.data) {
                 sendSmtpEmail.params = notification.data
             }
 
-            await this.client_.sendTransacEmail(sendSmtpEmail)
+            await this.client.sendTransacEmail(sendSmtpEmail)
 
             return {}
         } catch (error) {
