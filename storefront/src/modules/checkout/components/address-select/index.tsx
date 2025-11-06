@@ -33,6 +33,18 @@ const AddressSelect = ({
   }, [addresses, addressInput])
 
   return (
+    // <Select items={addresses}>
+    //   <SelectTrigger className="w-full">
+    //     <SelectValue />
+    //   </SelectTrigger>
+    //   <SelectContent>
+    //     {items.map((item) => (
+    //       <SelectItem key={item.value} value={item.value}>
+    //         {item.label}
+    //       </SelectItem>
+    //     ))}
+    //   </SelectContent>
+    // </Select>
     <Listbox onChange={handleSelect} value={selectedAddress?.id}>
       <div className="relative">
         <Listbox.Button

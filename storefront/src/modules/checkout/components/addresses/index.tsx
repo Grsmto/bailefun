@@ -44,7 +44,7 @@ const Addresses = ({
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
-          className="flex flex-row gap-x-2 items-baseline"
+          className="flex flex-row gap-x-2 items-baseline items-center"
         >
           Shipping Address
           {!isOpen && <CheckCircleSolid />}
@@ -75,7 +75,7 @@ const Addresses = ({
               <div>
                 <Heading
                   level="h2"
-                  className="text-3xl-regular gap-x-4 pb-6 pt-8"
+                  className="flex flex-row gap-x-2 items-baseline items-center pb-6 pt-8"
                 >
                   Billing address
                 </Heading>
@@ -99,7 +99,7 @@ const Addresses = ({
                     className="flex flex-col w-full small:w-1/3"
                     data-testid="shipping-address-summary"
                   >
-                    <Text className="txt-medium-plus mb-1">
+                    <Text className="mb-1">
                       Shipping Address
                     </Text>
                     <Text className="text-sm">
@@ -123,7 +123,7 @@ const Addresses = ({
                     className="flex flex-col w-full small:w-1/3 "
                     data-testid="shipping-contact-summary"
                   >
-                    <Text className="txt-medium-plus mb-1">
+                    <Text className="mb-1">
                       Contact
                     </Text>
                     <Text className="text-sm">
@@ -138,13 +138,13 @@ const Addresses = ({
                     className="flex flex-col w-full small:w-1/3"
                     data-testid="billing-address-summary"
                   >
-                    <Text className="txt-medium-plus mb-1">
+                    <Text className="mb-1">
                       Billing Address
                     </Text>
 
                     {sameAsBilling ? (
                       <Text className="text-sm">
-                        Billing- and delivery address are the same.
+                        Billing and delivery address are the same.
                       </Text>
                     ) : (
                       <>

@@ -156,7 +156,7 @@ const Shipping: React.FC<ShippingProps> = ({
         <Heading
           level="h2"
           className={clx(
-            "flex flex-row gap-x-2 items-baseline",
+            "flex flex-row gap-x-2 items-baseline items-center",
             {
               "opacity-50 pointer-events-none select-none":
                 !isOpen && cart.shipping_methods?.length === 0,
@@ -339,7 +339,7 @@ const Shipping: React.FC<ShippingProps> = ({
           <div className="text-small-regular">
             {cart && (cart.shipping_methods?.length ?? 0) > 0 && (
               <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus mb-1">
+                <Text className="mb-1">
                   Method
                 </Text>
                 <Text className="text-sm">

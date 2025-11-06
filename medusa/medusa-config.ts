@@ -54,6 +54,7 @@ module.exports = defineConfig({
             id: "stripe",
             options: {
               apiKey: process.env.STRIPE_API_KEY,
+              webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
             },
           },
         ],

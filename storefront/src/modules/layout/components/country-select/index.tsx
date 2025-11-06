@@ -75,7 +75,7 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
               variant="ghost"
               size="sm"
               role="combobox"
-              aria-expanded={open}
+              aria-expanded={state}
             >
               <div className="txt-compact-small flex items-start gap-x-2">
                 <span className="hidden xsmall:block">Shipping to:</span>

@@ -201,11 +201,17 @@
   }
 
   input[type="text"]:focus~label,
-  input[type="text"]:not(:placeholder-shown)~label {
+  input[type="email"]:focus~label,
+  input[type="password"]:focus~label,
+  input[type="text"]:not(:placeholder-shown)~label,
+  input[type="email"]:not(:placeholder-shown)~label,
+  input[type="password"]:not(:placeholder-shown)~label {
     @apply -translate-y-3 text-[10px] opacity-30;
   }
 
-  input[type="text"]:focus~label {
+  input[type="text"]:focus~label,
+  input[type="email"]:focus~label,
+  input[type="password"]:focus~label {
     @apply left-0;
   }
 
@@ -436,7 +442,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;

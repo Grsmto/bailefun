@@ -1,6 +1,7 @@
 import { HttpTypes } from "@medusajs/types"
 import { Container } from "@medusajs/ui"
-import Checkbox from "@modules/common/components/checkbox"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import Input from "@modules/common/components/input"
 import { mapKeys } from "lodash"
 import React, { useEffect, useMemo, useState } from "react"
@@ -183,13 +184,16 @@ const ShippingAddress = ({
         />
       </div>
       <div className="my-8">
-        <Checkbox
-          label="Billing address same as shipping address"
-          name="same_as_billing"
-          checked={checked}
-          onChange={onChange}
-          data-testid="billing-address-checkbox"
-        />
+        <div className="flex items-center gap-2">
+          <Checkbox
+            name="same_as_billing"
+            checked={checked}
+            onCheckedChange={onChange}
+            id="billing-address-checkbox"
+            data-testid="billing-address-checkbox"
+          />
+          <Label htmlFor="billing-address-checkbox">Billing address same as shipping address</Label>
+        </div>
       </div>
       <div className="grid grid-cols-2 gap-4 mb-4">
         <Input

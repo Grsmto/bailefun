@@ -4,9 +4,8 @@ import React, { useContext, useMemo, type JSX } from "react"
 import { RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 
-import { isManual } from "@lib/constants"
 import SkeletonCardDetails from "@modules/skeletons/components/skeleton-card-details"
-import { CardElement } from "@stripe/react-stripe-js"
+import { CardElement, PaymentElement } from "@stripe/react-stripe-js"
 import { StripeCardElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "../payment-test"
 import { StripeContext } from "../payment-wrapper/stripe-wrapper"
@@ -26,8 +25,8 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
   disabled = false,
   children,
 }) => {
-  const isDevelopment = process.env.NODE_ENV === "development"
-
+  console.log(paymentInfoMap)
+  console.log(paymentProviderId)
   return (
     <div className="flex items-center gap-2">
       <RadioGroupItem
@@ -87,33 +86,25 @@ export const StripeCardContainer = ({
     }
   }, [])
 
-  return (
-    <PaymentContainer
-      paymentProviderId={paymentProviderId}
-      selectedPaymentOptionId={selectedPaymentOptionId}
-      paymentInfoMap={paymentInfoMap}
-      disabled={disabled}
-    >
-      {selectedPaymentOptionId === paymentProviderId &&
-        (stripeReady ? (
-          <div className="my-4 transition-all duration-150 ease-in-out">
-            <Text className="txt-medium-plus mb-1">
-              Enter your card details:
-            </Text>
-            <CardElement
-              options={useOptions as StripeCardElementOptions}
-              onChange={(e) => {
-                setCardBrand(
-                  e.brand && e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
-                )
-                setError(e.error?.message || null)
-                setCardComplete(e.complete)
-              }}
-            />
-          </div>
-        ) : (
-          <SkeletonCardDetails />
-        ))}
-    </PaymentContainer>
-  )
+  return selectedPaymentOptionId === paymentProviderId &&
+    (stripeReady ? (
+      <div className="my-4 transition-all duration-150 ease-in-out">
+        <Text className="mb-1 text-small-regular">
+          Enter your card details:
+        </Text>
+        {/* <CardElement
+          options={useOptions as StripeCardElementOptions}
+          onChange={(e) => {
+            setCardBrand(
+              e.brand && e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
+            )
+            setError(e.error?.message || null)
+            setCardComplete(e.complete)
+          }}
+        /> */}
+        <PaymentElement />
+      </div>
+    ) : (
+      <SkeletonCardDetails />
+    ))
 }

@@ -74,7 +74,7 @@ const CartDropdown = ({
           </Button>
         )}
       />
-      <PopoverContent className="w-[250px] p-0" sideOffset={4} align="end" arrow={false} data-testid="nav-cart-dropdown">
+      <PopoverContent className="w-[400px] p-0" sideOffset={4} align="end" arrow={false} data-testid="nav-cart-dropdown">
         <div className="p-4 flex items-center justify-center">
           <h3 className="text-large-semi">Cart</h3>
         </div>
@@ -89,7 +89,7 @@ const CartDropdown = ({
                 })
                 .map((item) => (
                   <div
-                    className="grid grid-cols-[122px_1fr] gap-x-4"
+                    className="grid grid-cols-[96px_1fr] gap-x-4"
                     key={item.id}
                     data-testid="cart-item"
                   >
@@ -103,11 +103,11 @@ const CartDropdown = ({
                         size="square"
                       />
                     </LocalizedClientLink>
-                    <div className="flex flex-col justify-between flex-1">
+                    <div className="flex flex-col justify-between flex-1 min-w-0">
                       <div className="flex flex-col flex-1">
                         <div className="flex items-start justify-between">
-                          <div className="flex flex-col text-ellipsis whitespace-nowrap mr-4 w-[180px]">
-                            <h3 className="text-base-regular overflow-hidden text-ellipsis">
+                          <div className="flex flex-col mr-3 max-w-full min-w-0">
+                            <h3 className="text-base-regular text-ellipsis whitespace-nowrap overflow-hidden text-ellipsis uppercase">
                               <LocalizedClientLink
                                 href={`/products/${item.product_handle}`}
                                 data-testid="product-link"
@@ -121,6 +121,7 @@ const CartDropdown = ({
                               data-value={item.variant}
                             />
                             <span
+                              className=" text-small-regular"
                               data-testid="cart-item-quantity"
                               data-value={item.quantity}
                             >
@@ -169,6 +170,7 @@ const CartDropdown = ({
                   className="w-full"
                   size="lg"
                   data-testid="go-to-cart-button"
+                  onClick={close}
                 >
                   Go to cart
                 </Button>

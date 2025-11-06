@@ -20,7 +20,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
             className="flex flex-col w-full small:w-1/3"
             data-testid="shipping-address-summary"
           >
-            <Text className="txt-medium-plus mb-1">
+            <Text className="mb-1">
               Shipping Address
             </Text>
             <Text className="text-sm">
@@ -44,7 +44,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
             className="flex flex-col w-full small:w-1/3 "
             data-testid="shipping-contact-summary"
           >
-            <Text className="txt-medium-plus mb-1">Contact</Text>
+            <Text className="mb-1">Contact</Text>
             <Text className="text-sm">
               {order.shipping_address?.phone}
             </Text>
@@ -55,7 +55,7 @@ const ShippingDetails = ({ order }: ShippingDetailsProps) => {
             className="flex flex-col w-full small:w-1/3"
             data-testid="shipping-method-summary"
           >
-            <Text className="txt-medium-plus mb-1">Method</Text>
+            <Text className="mb-1">Method</Text>
             <Text className="text-sm">
               {(order as any).shipping_methods[0]?.name} (
               {convertToLocale({
