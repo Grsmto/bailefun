@@ -42,9 +42,11 @@ module.exports = defineConfig({
         },
       }
     ] : []),
-    {
-      resolve: "@medusajs/medusa/event-bus-local",
-    },
+    ...process.env.NODE_ENV === "development" ? [
+      {
+        resolve: "@medusajs/medusa/event-bus-local",
+      },
+    ] : [],
     {
       resolve: "@medusajs/medusa/payment",
       options: {
