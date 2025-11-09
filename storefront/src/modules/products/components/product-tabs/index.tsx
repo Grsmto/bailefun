@@ -18,7 +18,7 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
     //   component: <ProductInfoTab product={product} />,
     // },
     {
-      label: "Shipping & Returns",
+      label: "Production, Shipping & Returns",
       component: <ShippingInfoTab />,
     },
   ]
@@ -83,16 +83,18 @@ const ShippingInfoTab = () => {
     <div className="text-small-regular py-8">
       <div className="grid grid-cols-1 gap-y-8">
         <div className="flex items-start gap-x-2">
-          <FastDelivery />
+          <FastDelivery className="-mt-[1px]" size={24} />
           <div>
-            <span className="font-semibold">Fast delivery</span>
+            <span className="font-semibold">Production & Delivery</span>
             <p className="max-w-sm">
-              Your package will arrive in a random number of 4-7 business days because it is me preparing the orders manually. So be patient.
+              Every order is printed and prepared on-demand! Production can take up to 10 days.
+
+              Your package will arrive in 3 to 5 business days *after* printing is done. I'm preparing everything myself, so please be patient!
             </p>
           </div>
         </div>
         <div className="flex items-start gap-x-2">
-          <Refresh />
+          <Refresh className="-mt-[2px]" size={24} />
           <div>
             <span className="font-semibold">Simple exchanges</span>
             <p className="max-w-sm">
@@ -102,13 +104,11 @@ const ShippingInfoTab = () => {
           </div>
         </div>
         <div className="flex items-start gap-x-2">
-          <Back />
+          <Back className="-mt-[2px]" size={24} />
           <div>
             <span className="font-semibold">Easy returns</span>
             <p className="max-w-sm">
-              Just return your product and we&apos;ll refund your money. No
-              questions asked – we&apos;ll do our best to make sure your return
-              is hassle-free.
+              Just return your product and we&apos;ll refund your money. Product needs to be in its original condition please!
             </p>
           </div>
         </div>
