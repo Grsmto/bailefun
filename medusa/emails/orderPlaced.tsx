@@ -238,7 +238,7 @@ const OrderPlacedEmailTemplate = ({ order }: OrderPlacedEmailProps) => {
                     <Hr style={global.hr} />
                     <Section style={message}>
                         <Img
-                            src={`${process.env.S3_FILE_URL}/bailefun.jpg`}
+                            src={`${process.env.STOREFRONT_URL}/bailefun.jpg`}
                             width="66"
                             height="22"
                             alt="BAILEFUN"
@@ -307,8 +307,7 @@ const OrderPlacedEmailTemplate = ({ order }: OrderPlacedEmailProps) => {
                     <Section style={paddingY}>
                         <Row>
                             <Text style={{ ...footer.text, paddingTop: 30, paddingBottom: 30 }}>
-                                Please contact us if you have any questions. (If you reply to this
-                                email, we won't be able to see it.)
+                                Please contact us by replying to this email if you have any questions.
                             </Text>
                         </Row>
                         <Row>
