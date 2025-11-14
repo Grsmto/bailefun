@@ -65,13 +65,17 @@ const StripePaymentButton = ({
   )
 
   const onPaymentCompleted = async () => {
-    await placeOrder()
+    const order = await placeOrder()
       .catch((err) => {
         setErrorMessage(err.message)
       })
       .finally(() => {
         setSubmitting(false)
       })
+
+    if (order) {
+      router.push(`/${countryCode}/order/${order.id}/confirmed`)
+    }
   }
 
   const stripe = useStripe()
