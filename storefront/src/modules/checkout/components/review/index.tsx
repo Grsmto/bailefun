@@ -39,9 +39,8 @@ const Review = ({ cart }: { cart: any }) => {
             <div className="w-full">
               <Text className="mb-1">
                 By clicking the Place Order button, you confirm that you have
-                read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Medusa
-                Store&apos;s Privacy Policy.
+                read, understood and accepted our production and delivery terms.
+                Each order is prepared manually by us!
               </Text>
             </div>
           </div>

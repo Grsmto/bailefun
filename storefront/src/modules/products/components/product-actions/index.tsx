@@ -96,7 +96,7 @@ export default function ProductActions({
 
   const actionsRef = useRef<HTMLDivElement>(null)
 
-  const inView = useIntersection(actionsRef, "0px")
+  const { isVisible, boundingBox } = useIntersection(actionsRef, "0px")
 
   // add the selected variant to the cart
   const handleAddToCart = async () => {
@@ -166,7 +166,7 @@ export default function ProductActions({
           inStock={inStock}
           handleAddToCart={handleAddToCart}
           isAdding={isAdding}
-          show={!inView}
+          show={!isVisible && (boundingBox?.bottom ?? 0) > 0}
           optionsDisabled={!!disabled || isAdding}
           isValidVariant={isValidVariant}
         />

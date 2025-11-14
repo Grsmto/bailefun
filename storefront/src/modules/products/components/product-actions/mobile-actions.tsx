@@ -55,6 +55,11 @@ const MobileActions: React.FC<MobileActionsProps> = ({
 
   const isSimple = isSimpleProduct(product)
 
+  const handleOptionUpdate = (optionId: string, value: string) => {
+    close()
+    updateOptions(optionId, value)
+  }
+
   return (
     <>
       <div
@@ -151,7 +156,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-gray-700 bg-opacity-75 backdrop-blur-sm" />
+            <div className="fixed inset-0 bg-black/25 backdrop-blur-sm" />
           </Transition.Child>
 
           <div className="fixed bottom-0 inset-x-0">
@@ -187,7 +192,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                               <OptionSelect
                                 option={option}
                                 current={options[option.id]}
-                                updateOption={updateOptions}
+                                updateOption={handleOptionUpdate}
                                 title={option.title ?? ""}
                                 disabled={optionsDisabled}
                               />

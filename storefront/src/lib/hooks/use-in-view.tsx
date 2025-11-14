@@ -5,6 +5,7 @@ export const useIntersection = (
   rootMargin: string
 ) => {
   const [isVisible, setState] = useState(false)
+  const [boundingBox, setBoundingBox] = useState<DOMRectReadOnly | null>(null)
 
   useEffect(() => {
     if (!element.current) {
@@ -16,6 +17,7 @@ export const useIntersection = (
     const observer = new IntersectionObserver(
       ([entry]) => {
         setState(entry.isIntersecting)
+        setBoundingBox(entry.boundingClientRect)
       },
       { rootMargin }
     )
@@ -25,5 +27,5 @@ export const useIntersection = (
     return () => observer.unobserve(el)
   }, [element, rootMargin])
 
-  return isVisible
+  return { isVisible, boundingBox }
 }
