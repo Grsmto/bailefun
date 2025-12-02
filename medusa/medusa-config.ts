@@ -40,6 +40,20 @@ module.exports = defineConfig({
             url: process.env.REDIS_URL,
           },
         },
+      },
+      {
+        resolve: "@medusajs/medusa/locking",
+        options: {
+          providers: [
+            {
+              resolve: "@medusajs/medusa/locking-redis",
+              id: "locking-redis",
+              options: {
+                redisUrl: process.env.REDIS_URL,
+              },
+            },
+          ],
+        },
       }
     ] : []),
     ...process.env.NODE_ENV === "development" ? [
