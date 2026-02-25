@@ -240,18 +240,13 @@ const OrderPlacedEmailTemplate = ({ order }: OrderPlacedEmailProps) => {
                         <Img
                             src={`${process.env.STOREFRONT_URL}/bailefun.jpg`}
                             width="66"
-                            height="22"
+                            height="66"
                             alt="BAILEFUN"
                             style={{ margin: 'auto' }}
                         />
                         <Heading style={global.heading}>We received your order.</Heading>
                         <Text style={global.text}>
-                            You order's is on its way. Use the link above to track its progress.
-                        </Text>
-                        <Text style={{ ...global.text, marginTop: 24 }}>
-                            We´ve also charged your payment method for the cost of your order
-                            and will be removing any authorization holds. For payment details,
-                            please visit your Orders page on Nike.com or in the Nike app.
+                            Your order has been received and is being processed! We'll let you know when it's ready and has been shipped.
                         </Text>
                     </Section>
                     <Hr style={global.hr} />
