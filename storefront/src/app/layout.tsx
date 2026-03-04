@@ -1,5 +1,6 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import "styles/globals.css"
 
@@ -13,6 +14,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <main className="root relative">{props.children}</main>
       </body>
+      <GoogleAnalytics gaId="G-R1D3W8BDD5" />
     </html>
   )
 }
