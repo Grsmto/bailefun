@@ -104,7 +104,7 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
 
     try {
       // Update the region (this will set the cookie and redirect)
-      await updateRegion(country, currentPath)
+      await updateRegion(country)
     } catch (error) {
       // If update fails, revert to previous country code
       updateCountryCodeFromCookie()
