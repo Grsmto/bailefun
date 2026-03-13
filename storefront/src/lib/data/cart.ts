@@ -6,6 +6,10 @@ import { HttpTypes } from "@medusajs/types"
 import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import {
+  getCountryCode,
+  setCountryCode,
+} from "@lib/data/cookies"
+import {
   getAuthHeaders,
   getCacheOptions,
   getCacheTag,
@@ -114,14 +118,18 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
 export async function addToCart({
   variantId,
   quantity,
-  countryCode,
 }: {
   variantId: string
   quantity: number
-  countryCode: string
 }) {
   if (!variantId) {
     throw new Error("Missing variant ID when adding to cart")
+  }
+
+  const countryCode = await getCountryCode()
+
+  if (!countryCode) {
+    throw new Error("Country code not found. Please select a country.")
   }
 
   const cart = await getOrSetCart(countryCode)
@@ -409,15 +417,11 @@ export async function placeOrder(cartId?: string) {
     .catch(medusaError)
 
   if (cartRes?.type === "order") {
-    const countryCode =
-      cartRes.order.shipping_address?.country_code?.toLowerCase()
-
     const orderCacheTag = await getCacheTag("orders")
     revalidateTag(orderCacheTag)
 
     removeCartId()
-
-    return cartRes.order
+    redirect(`/order/${cartRes?.order.id}/confirmed`)
   }
 
   return cartRes.cart
@@ -436,6 +440,9 @@ export async function updateRegion(countryCode: string, currentPath: string) {
     throw new Error(`Region not found for country code: ${countryCode}`)
   }
 
+  // Set country code cookie
+  await setCountryCode(countryCode)
+
   if (cartId) {
     await updateCart({ region_id: region.id })
     const cartCacheTag = await getCacheTag("carts")
@@ -448,7 +455,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
   const productsCacheTag = await getCacheTag("products")
   revalidateTag(productsCacheTag)
 
-  redirect(`/${countryCode}${currentPath}`)
+  redirect(currentPath || "/")
 }
 
 export async function listCartOptions() {

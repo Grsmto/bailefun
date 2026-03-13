@@ -1,14 +1,15 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { StoreCollection, StoreRegion } from "@medusajs/types"
 
 import { getCollectionByHandle, listCollections } from "@lib/data/collections"
 import { listRegions } from "@lib/data/regions"
-import { StoreCollection, StoreRegion } from "@medusajs/types"
+import { getCountryCode } from "@lib/data/cookies"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
 type Props = {
-  params: Promise<{ handle: string; countryCode: string }>
+  params: Promise<{ handle: string }>
   searchParams: Promise<{
     page?: string
     sortBy?: SortOptions
@@ -70,6 +71,12 @@ export default async function CollectionPage(props: Props) {
   const searchParams = await props.searchParams
   const params = await props.params
   const { sortBy, page } = searchParams
+  const countryCode = await getCountryCode()
+
+  if (!countryCode) {
+    notFound()
+  }
+
 
   const collection = await getCollectionByHandle(params.handle).then(
     (collection: StoreCollection) => collection
@@ -84,7 +91,7 @@ export default async function CollectionPage(props: Props) {
       collection={collection}
       page={page}
       sortBy={sortBy}
-      countryCode={params.countryCode}
+      countryCode={countryCode}
     />
   )
 }
