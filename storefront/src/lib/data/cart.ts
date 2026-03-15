@@ -1,9 +1,10 @@
 "use server"
 
+import { updateTag } from "next/cache"
+
 import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { HttpTypes } from "@medusajs/types"
-import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 import {
   getCountryCode,
@@ -78,13 +79,13 @@ export async function getOrSetCart(countryCode: string) {
     await setCartId(cart.id)
 
     const cartCacheTag = await getCacheTag("carts")
-    revalidateTag(cartCacheTag, 'max')
+    updateTag(cartCacheTag)
   }
 
   if (cart && cart?.region_id !== region.id) {
     await sdk.store.cart.update(cart.id, { region_id: region.id }, {}, headers)
     const cartCacheTag = await getCacheTag("carts")
-    revalidateTag(cartCacheTag, 'max')
+    updateTag(cartCacheTag)
   }
 
   return cart
@@ -105,10 +106,12 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
     .update(cartId, data, {}, headers)
     .then(async ({ cart }) => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
+
+      console.log("cart updated")
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag, 'max')
+      updateTag(fulfillmentCacheTag)
 
       return cart
     })
@@ -154,10 +157,10 @@ export async function addToCart({
     )
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag, 'max')
+      updateTag(fulfillmentCacheTag)
     })
     .catch(medusaError)
 }
@@ -187,10 +190,10 @@ export async function updateLineItem({
     .updateLineItem(cartId, lineId, { quantity }, {}, headers)
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag, 'max')
+      updateTag(fulfillmentCacheTag)
     })
     .catch(medusaError)
 }
@@ -214,10 +217,10 @@ export async function deleteLineItem(lineId: string) {
     .deleteLineItem(cartId, lineId, headers)
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag, 'max')
+      updateTag(fulfillmentCacheTag)
     })
     .catch(medusaError)
 }
@@ -237,7 +240,7 @@ export async function setShippingMethod({
     .addShippingMethod(cartId, { option_id: shippingMethodId }, {}, headers)
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
     })
     .catch(medusaError)
 }
@@ -254,7 +257,7 @@ export async function initiatePaymentSession(
     .initiatePaymentSession(cart, data, {}, headers)
     .then(async (resp) => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
       return resp
     })
     .catch(medusaError)
@@ -275,10 +278,10 @@ export async function applyPromotions(codes: string[]) {
     .update(cartId, { promo_codes: codes }, {}, headers)
     .then(async () => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
 
       const fulfillmentCacheTag = await getCacheTag("fulfillment")
-      revalidateTag(fulfillmentCacheTag, 'max')
+      updateTag(fulfillmentCacheTag)
     })
     .catch(medusaError)
 }
@@ -288,7 +291,7 @@ export async function applyGiftCard(code: string) {
   //   if (!cartId) return "No cartId cookie found"
   //   try {
   //     await updateCart(cartId, { gift_cards: [{ code }] }).then(() => {
-  //       revalidateTag(", 'max'cart")
+  //       updateTag(",)
   //     })
   //   } catch (error: any) {
   //     throw error
@@ -300,7 +303,7 @@ export async function removeDiscount(code: string) {
   // if (!cartId) return "No cartId cookie found"
   // try {
   //   await deleteDiscount(cartId, code)
-  //   revalidateTag(", 'max'cart")
+  //   updateTag(",)
   // } catch (error: any) {
   //   throw error
   // }
@@ -319,7 +322,7 @@ export async function removeGiftCard(
   //         .filter((gc) => gc.code !== codeToRemove)
   //         .map((gc) => ({ code: gc.code })),
   //     }).then(() => {
-  //       revalidateTag(", 'max'cart")
+  //       updateTag(",)
   //     })
   //   } catch (error: any) {
   //     throw error
@@ -409,14 +412,14 @@ export async function placeOrder(cartId?: string) {
     .complete(id, {}, headers)
     .then(async (cartRes) => {
       const cartCacheTag = await getCacheTag("carts")
-      revalidateTag(cartCacheTag, 'max')
+      updateTag(cartCacheTag)
       return cartRes
     })
     .catch(medusaError)
 
   if (cartRes?.type === "order") {
     const orderCacheTag = await getCacheTag("orders")
-    revalidateTag(orderCacheTag, 'max')
+    updateTag(orderCacheTag)
 
     removeCartId()
     redirect(`/order/${cartRes?.order.id}/confirmed`)
@@ -444,14 +447,14 @@ export async function updateRegion(countryCode: string) {
   if (cartId) {
     await updateCart({ region_id: region.id })
     const cartCacheTag = await getCacheTag("carts")
-    revalidateTag(cartCacheTag, 'max')
+    updateTag(cartCacheTag)
   }
 
   const regionCacheTag = await getCacheTag("regions")
-  revalidateTag(regionCacheTag, 'max')
+  updateTag(regionCacheTag)
 
   const productsCacheTag = await getCacheTag("products")
-  revalidateTag(productsCacheTag, 'max')
+  updateTag(productsCacheTag)
 }
 
 export async function listCartOptions() {

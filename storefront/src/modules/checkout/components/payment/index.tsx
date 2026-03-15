@@ -26,7 +26,6 @@ const Payment = ({
   availablePaymentMethods: any[]
 }) => {
   const paymentMethod = availablePaymentMethods[0];
-  console.log(paymentMethod)
   const activeSession = cart.payment_collection?.payment_sessions?.find(
     (paymentSession: any) => paymentSession.status === "pending"
   )

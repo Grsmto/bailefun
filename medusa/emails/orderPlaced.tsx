@@ -226,7 +226,6 @@ interface OrderPlacedEmailProps {
 }
 
 const OrderPlacedEmailTemplate = ({ order }: OrderPlacedEmailProps) => {
-    console.log(order)
     return (
         <Html>
             <Head />

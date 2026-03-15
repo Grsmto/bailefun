@@ -25,8 +25,6 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
   disabled = false,
   children,
 }) => {
-  console.log(paymentInfoMap)
-  console.log(paymentProviderId)
   return (
     <div className="flex items-center gap-2">
       <RadioGroupItem
