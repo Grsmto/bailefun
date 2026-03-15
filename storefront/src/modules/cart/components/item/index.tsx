@@ -62,9 +62,9 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
         </LocalizedClientLink>
       </Table.Cell>
 
-      <Table.Cell className="text-left pr-3">
+      <Table.Cell className="text-left pr-3 leading-0">
         <Text
-          className="text-small-regular uppercase"
+          className="text-small-regular uppercase leading-4"
           data-testid="product-title"
         >
           {item.product_title}
