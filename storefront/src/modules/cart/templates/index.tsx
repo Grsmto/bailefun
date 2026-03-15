@@ -18,12 +18,12 @@ const CartTemplate = ({
         {cart?.items?.length ? (
           <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-40">
             <div className="flex flex-col py-6 gap-y-6">
-              {!customer && (
+              {/* {!customer && (
                 <>
                   <SignInPrompt />
                   <Divider />
                 </>
-              )}
+              )} */}
               <ItemsTemplate cart={cart} />
             </div>
             <div className="relative">
