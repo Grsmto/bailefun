@@ -114,3 +114,8 @@ module.exports = defineConfig({
     },
   ],
 })
+
+setInterval(() => {
+  const m = process.memoryUsage()
+  console.log("Heap MB:", m.heapUsed / 1024 / 1024)
+}, 3000)
