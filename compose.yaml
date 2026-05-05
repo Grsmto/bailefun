@@ -1,0 +1,80 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: bailefun
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "bailefun"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:8
+    volumes:
+      - cache-backend-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend-server:
+    build: ./medusa
+    ports:
+      - 9000:9000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - backend-server-data:/data
+    environment:
+      NODE_ENV: CI
+      STORE_CORS: http://localhost:8000
+      ADMIN_CORS: http://localhost:8000,http://localhost:9000
+      REDIS_URL: redis://redis:6379
+      CACHE_REDIS_URL: redis://redis:6379
+      EVENTS_REDIS_URL: redis://redis:6379
+      WE_REDIS_URL: redis://redis:6379
+      LOCKING_REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgres://bailefun:${POSTGRES_PASSWORD}@postgres:5432/bailefun
+      POSTGRES_URL: postgres://bailefun:${POSTGRES_PASSWORD}@postgres:5432/bailefun
+      MEDUSA_CREATE_ADMIN_USER: true
+      MEDUSA_ADMIN_EMAIL: ${MEDUSA_ADMIN_EMAIL}
+      MEDUSA_ADMIN_PASSWORD: ${MEDUSA_ADMIN_PASSWORD}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
+      STOREFRONT_URL: ${STOREFRONT_URL}
+      AUTH_CORS: ${AUTH_CORS}
+      MEDUSA_BACKEND_URL: ${MEDUSA_BACKEND_URL}
+      DISABLE_MEDUSA_ADMIN: false
+      MEDUSA_WORKER_MODE: server
+      STRIPE_API_KEY: ${STRIPE_API_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      S3_FILE_URL: ${S3_FILE_URL}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+      S3_REGION: ${S3_REGION}
+      S3_BUCKET: medusa-bailefun-fun
+      S3_ENDPOINT: https://s3.eu-west-2.amazonaws.com
+      BREVO_API_KEY: ${BREVO_API_KEY}
+      BREVO_FROM_EMAIL: ${BREVO_FROM_EMAIL}
+      BREVO_FROM_NAME: ${BREVO_FROM_NAME}
+      NODE_OPTIONS: --max-old-space-size=1536
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+
+volumes:
+  postgres-data:
+  backend-server-data:
+  cache-backend-data:
