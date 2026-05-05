@@ -25,6 +25,8 @@ services:
 
   backend-server:
     build: ./medusa
+    env_file:
+      - ./medusa/.env
     ports:
       - 9000:9000
     depends_on:
