@@ -6,6 +6,7 @@ module.exports = defineConfig({
   admin: {
     disable: process.env.DISABLE_MEDUSA_ADMIN === "true",
     backendUrl: process.env.MEDUSA_BACKEND_URL,
+    maxUploadFileSize: 5 * 1024 * 1024,
   },
   projectConfig: {
     workerMode: process.env.MEDUSA_WORKER_MODE as "shared" | "worker" | "server",
