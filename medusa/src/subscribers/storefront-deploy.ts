@@ -1,26 +1,21 @@
-import {
-    type SubscriberConfig,
-    type SubscriberArgs
-} from "@medusajs/framework/subscribers"
+// src/subscribers/handle-revalidation.ts
+import { SubscriberArgs, type SubscriberConfig } from "@medusajs/framework/subscribers"
 
-export default async function handleContentChange({
-    event,
-    container,
-}: SubscriberArgs<any>) {
-    const COOLIFY_WEBHOOK = process.env.STOREFRONT_DEPLOY_WEBHOOK
+export default async function handleRevalidation({ event }: SubscriberArgs<any>) {
+    const STOREFRONT_URL = process.env.STOREFRONT_URL
 
-    if (!COOLIFY_WEBHOOK) {
-        return console.error("STOREFRONT_DEPLOY_WEBHOOK is missing in .env")
-    }
+    // We want to trigger the "products" case in your switch statement
+    const tags = "products"
+
+    const url = `${STOREFRONT_URL}/api/revalidate?tags=${tags}`
 
     try {
-        const response = await fetch(COOLIFY_WEBHOOK)
-
-        if (response.ok) {
-            console.log(`Successfully triggered Coolify deploy via event: ${event.name}`)
+        const res = await fetch(url)
+        if (res.ok) {
+            console.log(`Successfully signaled Next.js to revalidate paths for: ${tags}`)
         }
-    } catch (error) {
-        console.error("Failed to trigger Coolify deployment:", error)
+    } catch (err) {
+        console.error("Failed to reach Next.js revalidation endpoint", err)
     }
 }
 
@@ -34,6 +29,6 @@ export const config: SubscriberConfig = {
         "price_list.updated",
     ],
     context: {
-        subscriberId: "coolify-deploy-handler",
+        subscriberId: "next-revalidation-handler",
     },
 }
