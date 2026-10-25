@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react"
-import * as ObserverKit from "@maximebonhomme/observerkit-js"
+import * as ObserverKit from "@observerkit/js"
 
 export default function GlobalError({
     error,
