@@ -1,6 +1,8 @@
 import "server-only"
 import { cookies as nextCookies } from "next/headers"
 
+export { COUNTRY_CODE_COOKIE_NAME } from "@lib/constants"
+
 export const getAuthHeaders = async (): Promise<
   { authorization: string } | {}
 > => {
@@ -87,8 +89,6 @@ export const removeCartId = async () => {
     maxAge: -1,
   })
 }
-
-export const COUNTRY_CODE_COOKIE_NAME = "_medusa_country_code"
 
 /**
  * Gets the current country code from cookies
