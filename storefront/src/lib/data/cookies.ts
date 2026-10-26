@@ -1,7 +1,7 @@
 import "server-only"
 import { cookies as nextCookies } from "next/headers"
 
-export { COUNTRY_CODE_COOKIE_NAME } from "@lib/country-code"
+import { COUNTRY_CODE_COOKIE_NAME } from "@lib/country-code"
 
 export const getAuthHeaders = async (): Promise<
   { authorization: string } | {}
