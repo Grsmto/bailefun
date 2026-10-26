@@ -34,24 +34,32 @@ export default function ProductActions({
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
 
+  const variants = useMemo(
+    () =>
+      [...(product.variants ?? [])].sort(
+        (a, b) => (a.variant_rank ?? 0) - (b.variant_rank ?? 0)
+      ),
+    [product.variants]
+  )
+
   // If there is only 1 variant, preselect the options
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
+    if (variants.length === 1) {
+      const variantOptions = optionsAsKeymap(variants[0].options)
       setOptions(variantOptions ?? {})
     }
-  }, [product.variants])
+  }, [variants])
 
   const selectedVariant = useMemo(() => {
-    if (!product.variants || product.variants.length === 0) {
+    if (variants.length === 0) {
       return
     }
 
-    return product.variants.find((v) => {
+    return variants.find((v) => {
       const variantOptions = optionsAsKeymap(v.options)
       return isEqual(variantOptions, options)
     })
-  }, [product.variants, options])
+  }, [variants, options])
 
   // update the options when a variant is selected
   const setOptionValue = (optionId: string, value: string) => {
@@ -63,11 +71,11 @@ export default function ProductActions({
 
   //check if the selected options produce a valid variant
   const isValidVariant = useMemo(() => {
-    return product.variants?.some((v) => {
+    return variants.some((v) => {
       const variantOptions = optionsAsKeymap(v.options)
       return isEqual(variantOptions, options)
     })
-  }, [product.variants, options])
+  }, [variants, options])
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
@@ -115,7 +123,7 @@ export default function ProductActions({
     <>
       <div className="flex flex-col gap-y-2" ref={actionsRef}>
         <div>
-          {(product.variants?.length ?? 0) > 1 && (
+          {variants.length > 1 && (
             <div className="flex flex-col gap-y-4">
               {(product.options || []).sort((a, b) => a.created_at!.localeCompare(b.created_at!)).map((option) => {
                 return (
