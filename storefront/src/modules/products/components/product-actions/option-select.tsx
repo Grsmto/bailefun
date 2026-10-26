@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 
 type OptionSelectProps = {
   option: HttpTypes.StoreProductOption
+  variants?: HttpTypes.StoreProductVariant[]
   current: string | undefined
   updateOption: (title: string, value: string) => void
   title: string
@@ -14,13 +15,39 @@ type OptionSelectProps = {
 
 const OptionSelect: React.FC<OptionSelectProps> = ({
   option,
+  variants,
   current,
   updateOption,
   title,
   "data-testid": dataTestId,
   disabled,
 }) => {
-  const filteredOptions = (option.values ?? []).map((v) => v.value)
+  const filteredOptions = (() => {
+    if (!variants?.length) {
+      return (option.values ?? []).map((v) => v.value)
+    }
+
+    const seen = new Set<string>()
+    const ordered: string[] = []
+
+    for (const variant of variants) {
+      const value = variant.options?.find((o) => o.option_id === option.id)
+        ?.value
+
+      if (value && !seen.has(value)) {
+        seen.add(value)
+        ordered.push(value)
+      }
+    }
+
+    for (const v of option.values ?? []) {
+      if (!seen.has(v.value)) {
+        ordered.push(v.value)
+      }
+    }
+
+    return ordered
+  })()
 
   return (
     <div className="flex flex-col gap-y-3">

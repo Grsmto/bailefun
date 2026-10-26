@@ -42,6 +42,8 @@ export default function ProductActions({
     [product.variants]
   )
 
+  console.log(variants)
+
   // If there is only 1 variant, preselect the options
   useEffect(() => {
     if (variants.length === 1) {
@@ -125,20 +127,23 @@ export default function ProductActions({
         <div>
           {variants.length > 1 && (
             <div className="flex flex-col gap-y-4">
-              {(product.options || []).sort((a, b) => a.created_at!.localeCompare(b.created_at!)).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.id]}
-                      updateOption={setOptionValue}
-                      title={option.title ?? ""}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding}
-                    />
-                  </div>
-                )
-              })}
+              {(product.options || [])
+                .sort((a, b) => a.created_at!.localeCompare(b.created_at!))
+                .map((option) => {
+                  return (
+                    <div key={option.id}>
+                      <OptionSelect
+                        option={option}
+                        variants={variants}
+                        current={options[option.id]}
+                        updateOption={setOptionValue}
+                        title={option.title ?? ""}
+                        data-testid="product-options"
+                        disabled={!!disabled || isAdding}
+                      />
+                    </div>
+                  )
+                })}
               <Divider />
             </div>
           )}
@@ -161,8 +166,8 @@ export default function ProductActions({
           {!selectedVariant
             ? "Add to cart"
             : !inStock || !isValidVariant
-              ? "Out of stock"
-              : "Add to cart"}
+            ? "Out of stock"
+            : "Add to cart"}
         </Button>
         <MobileActions
           product={product}

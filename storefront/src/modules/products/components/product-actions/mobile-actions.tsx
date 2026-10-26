@@ -39,6 +39,14 @@ const MobileActions: React.FC<MobileActionsProps> = ({
 }) => {
   const { state, open, close } = useToggleState()
 
+  const variants = useMemo(
+    () =>
+      [...(product.variants ?? [])].sort(
+        (a, b) => (a.variant_rank ?? 0) - (b.variant_rank ?? 0)
+      ),
+    [product.variants]
+  )
+
   const price = getProductPrice({
     product: product,
     variantId: variant?.id,
@@ -191,6 +199,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                             <div key={option.id}>
                               <OptionSelect
                                 option={option}
+                                variants={variants}
                                 current={options[option.id]}
                                 updateOption={handleOptionUpdate}
                                 title={option.title ?? ""}
