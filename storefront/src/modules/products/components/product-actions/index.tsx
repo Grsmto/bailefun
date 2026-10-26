@@ -42,8 +42,6 @@ export default function ProductActions({
     [product.variants]
   )
 
-  console.log(variants)
-
   // If there is only 1 variant, preselect the options
   useEffect(() => {
     if (variants.length === 1) {
